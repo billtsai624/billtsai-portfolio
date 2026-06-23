@@ -708,6 +708,32 @@ class MiniCarousel {
 }
 
 /* ════════════════════════════════════
+   STATIC IMAGE CONFIG
+   把圖片上傳到 GitHub repo 的 images/ 資料夾後，
+   在這裡填入檔名即可顯示在網頁上。
+   格式：'images/你的檔名.jpg'
+════════════════════════════════════ */
+const STATIC_IMGS = {
+  hero: [
+    // 'images/hero1.jpg',
+    // 'images/hero2.jpg',
+  ],
+  c1: [
+    // 'images/proj1-a.jpg',
+    // 'images/proj1-b.jpg',
+  ],
+  c2: [
+    // 'images/proj2-a.jpg',
+  ],
+  c3: [
+    // 'images/proj3-a.jpg',
+  ],
+  c4: [
+    // 'images/proj4-a.jpg',
+  ],
+};
+
+/* ════════════════════════════════════
    INIT CAROUSELS
 ════════════════════════════════════ */
 const carousels = {
@@ -717,6 +743,23 @@ const carousels = {
   c3:   new MiniCarousel(document.getElementById('mc-c3'),   'Project 03', 'c3'),
   c4:   new MiniCarousel(document.getElementById('mc-c4'),   'Project 04', 'c4'),
 };
+
+// 載入靜態圖片（只在 localStorage 無資料時套用）
+Object.entries(STATIC_IMGS).forEach(([key, urls]) => {
+  if (!urls.length) return;
+  const saved = loadImgs(key);
+  if (saved && saved.some(Boolean)) return; // 已有本地資料，跳過
+  const mc = carousels[key];
+  urls.forEach((src, i) => {
+    if (i === 0) {
+      mc.slides[0].imgEl.src = src;
+      mc.slides[0].slotEl.classList.add('filled');
+    } else {
+      mc._addSlide(false, src);
+    }
+  });
+  mc._update(); mc._startAuto();
+});
 let newCarousel = null;
 
 /* ════════════════════════════════════
