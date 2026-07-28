@@ -32,23 +32,6 @@ body {
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; overflow-x:hidden;
 }
 
-/* ── EDITABLE TEXT ── */
-[contenteditable] {
-  outline:none; border-radius:6px;
-  transition:background 0.15s, box-shadow 0.15s; cursor:text;
-}
-[contenteditable]:hover { background:rgba(13,58,56,0.04); }
-[contenteditable]:focus { background:rgba(13,58,56,0.08); box-shadow:0 0 0 2px var(--teal-brd); }
-[contenteditable].saved-flash { animation:savedFlash 0.6s ease; }
-@keyframes savedFlash { 0%,100%{background:transparent} 50%{background:rgba(13,58,56,0.15)} }
-.edit-hint {
-  position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
-  background:var(--teal); color:#fff; border-radius:100px;
-  padding:6px 18px; font-size:12px; font-weight:500; letter-spacing:-0.01em;
-  opacity:0; pointer-events:none; z-index:200; transition:opacity 0.3s;
-}
-.edit-hint.show { opacity:1; }
-
 /* ── CAROUSEL ── */
 .mc-wrap { width:100%; }
 .mc-viewport {
@@ -66,31 +49,7 @@ body {
 }
 .mc-track { display:flex; height:100%; transition:transform 0.5s cubic-bezier(0.4,0,0.2,1); }
 .mc-slide { flex:0 0 100%; height:100%; position:relative; overflow:hidden; }
-.mc-slide .up-slot {
-  position:absolute; inset:0; cursor:pointer;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem;
-  background:var(--teal-bg); border:1.5px dashed var(--teal-brd);
-  transition:background 0.2s, border-color 0.2s;
-}
-.mc-slide .up-slot:hover { background:rgba(13,58,56,0.13); border-color:var(--teal); }
-.mc-slide .up-slot:hover .up-icon { opacity:0.75; }
-.mc-slide .up-slot:hover .up-lbl { color:var(--teal); }
-.up-icon { opacity:0.28; transition:opacity 0.2s; }
-.up-icon svg { width:40px; height:40px; stroke:var(--teal); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
-.up-lbl { font-size:13px; font-weight:500; color:var(--text3); letter-spacing:-0.01em; transition:color 0.2s; margin-top:4px; }
-.up-hint { font-size:10px; color:var(--text3); opacity:0.45; }
-.up-slot.filled .up-icon, .up-slot.filled .up-lbl, .up-slot.filled .up-hint { display:none; }
-.mc-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:none; }
-.up-slot.filled .mc-img { display:block; }
-.mc-rm {
-  display:none; position:absolute; top:8px; right:8px; z-index:20;
-  width:26px; height:26px; border-radius:50%;
-  background:rgba(255,255,255,0.92); border:1px solid var(--border);
-  align-items:center; justify-content:center;
-  cursor:pointer; font-size:13px; color:var(--text2); transition:color 0.15s;
-}
-.up-slot.filled .mc-rm { display:flex; }
-.mc-rm:hover { color:#c00; }
+.mc-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .mc-arrow {
   position:absolute; top:50%; transform:translateY(-50%); z-index:15;
   width:42px; height:42px; border-radius:50%;
@@ -109,40 +68,10 @@ body {
   font-size:13px; font-weight:500; color:rgba(0,0,0,0.4);
   pointer-events:none; letter-spacing:-0.01em;
 }
-.mc-footer { display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+.mc-footer { display:flex; align-items:center; justify-content:center; margin-top:10px; }
 .mc-dots { display:flex; gap:5px; align-items:center; }
 .mc-dot { width:7px; height:7px; border-radius:50%; background:var(--bg3); cursor:pointer; transition:background 0.22s, transform 0.22s; }
 .mc-dot.active { background:var(--teal); transform:scale(1.3); }
-.mc-add {
-  display:inline-flex; align-items:center; gap:5px;
-  background:none; border:1px solid var(--teal-brd); border-radius:100px;
-  padding:5px 13px; font-size:11px; font-weight:500; color:var(--teal);
-  cursor:pointer; transition:background 0.18s, border-color 0.18s;
-}
-.mc-add:hover { background:var(--teal-bg); border-color:var(--teal); }
-.mc-add svg { width:12px; height:12px; stroke:var(--teal); fill:none; stroke-width:2.2; stroke-linecap:round; }
-.mc-resize-handle {
-  position:absolute; bottom:0; right:0; z-index:30;
-  width:28px; height:28px; cursor:se-resize;
-  display:flex; align-items:flex-end; justify-content:flex-end; padding:5px;
-}
-.mc-resize-handle svg { width:14px; height:14px; stroke:rgba(0,0,0,0.28); fill:none; stroke-width:2; stroke-linecap:round; transition:stroke 0.2s; pointer-events:none; }
-.mc-resize-handle:hover svg { stroke:var(--teal); }
-.mc-resize-w {
-  position:absolute; top:50%; right:-6px; transform:translateY(-50%);
-  z-index:30; width:12px; height:48px; cursor:ew-resize;
-  display:flex; align-items:center; justify-content:center;
-}
-.mc-resize-w::before { content:''; width:4px; height:32px; border-radius:2px; background:rgba(0,0,0,0.15); transition:background 0.2s; }
-.mc-resize-w:hover::before { background:var(--teal); }
-.case-height-grip {
-  display:flex; align-items:center; justify-content:center;
-  gap:8px; margin-top:8px; cursor:ns-resize; padding:4px 0;
-  color:var(--text3); font-size:11px; font-weight:500; letter-spacing:-0.01em; user-select:none;
-}
-.case-height-grip .grip-bar { width:40px; height:4px; border-radius:2px; background:var(--bg3); transition:background 0.2s; }
-.case-height-grip:hover .grip-bar { background:var(--teal); }
-.case-height-grip:hover { color:var(--teal); }
 
 /* ── NAV ── */
 nav {
@@ -156,7 +85,7 @@ nav {
 .nav-brand { display:flex; align-items:center; gap:0; }
 .nav-logo {
   font-size:15px; font-weight:800; letter-spacing:0.8px;
-  color:var(--teal); text-transform:uppercase; cursor:pointer;
+  color:var(--teal); text-transform:uppercase;
 }
 .nav-divider { width:1px; height:16px; background:var(--teal-brd); margin:0 14px; }
 .nav-dept { font-size:12px; font-weight:600; letter-spacing:1.5px; color:var(--teal); text-transform:uppercase; opacity:0.7; }
@@ -239,44 +168,6 @@ section { padding:6rem 2rem; }
   flex-shrink:0;
 }
 
-/* ── ADD PROJECT ── */
-.add-project-wrap { margin-top:3rem; }
-.add-project-btn {
-  width:100%; padding:2rem; border:2px dashed var(--teal-brd); border-radius:18px;
-  background:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:8px;
-  color:var(--text3); font-family:inherit; font-size:14px; font-weight:500;
-  transition:border-color 0.2s, background 0.2s, color 0.2s;
-}
-.add-project-btn:hover { border-color:var(--teal); background:var(--teal-bg); color:var(--teal); }
-.add-project-btn .plus { font-size:22px; line-height:1; }
-.add-form {
-  display:none; background:var(--card-bg); border-radius:18px;
-  padding:2rem; margin-top:1rem;
-}
-.add-form.show { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-.form-group { margin-bottom:1rem; }
-.form-group label { display:block; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
-.form-group input, .form-group textarea {
-  width:100%; background:#fff; border:1px solid var(--teal-brd); border-radius:10px;
-  padding:10px 14px; font-size:14px; color:var(--text); font-family:inherit;
-  transition:border-color 0.2s; resize:vertical;
-}
-.form-group input:focus, .form-group textarea:focus { outline:none; border-color:var(--teal); }
-.form-group textarea { min-height:84px; }
-.form-actions { display:flex; gap:10px; margin-top:4px; flex-wrap:wrap; }
-.btn-primary {
-  background:var(--teal); color:#fff; border:none; border-radius:100px;
-  padding:10px 24px; font-size:13px; font-weight:600; cursor:pointer;
-  font-family:inherit; transition:opacity 0.2s;
-}
-.btn-primary:hover { opacity:0.82; }
-.btn-cancel {
-  background:none; color:var(--text3); border:1px solid var(--border);
-  border-radius:100px; padding:10px 20px; font-size:13px; font-weight:500;
-  cursor:pointer; font-family:inherit; transition:color 0.2s, border-color 0.2s;
-}
-.btn-cancel:hover { color:var(--teal); border-color:var(--teal-brd); }
-
 /* ── FOOTER ── */
 footer { text-align:center; padding:3.5rem 2rem; background:var(--teal); }
 footer p { font-size:14px; color:rgba(255,255,255,0.55); letter-spacing:-0.01em; }
@@ -294,19 +185,15 @@ footer strong { color:rgba(255,255,255,0.88); }
   .case-block { grid-template-columns:1fr; gap:2rem; padding:2.5rem 0; }
   .case-block.reverse .case-carousel-block { order:0; }
   .mc-arrow { width:30px; height:30px; }
-  .add-form.show { grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- EDIT HINT -->
-<div class="edit-hint" id="edit-hint">✏️ Click any text to edit · changes auto-save</div>
-
 <!-- NAV -->
 <nav>
   <div class="nav-brand">
-    <div class="nav-logo" contenteditable="true" data-key="nav-logo">LOGITECH</div>
+    <div class="nav-logo">LOGITECH</div>
     <div class="nav-divider"></div>
     <span class="nav-dept">AME</span>
   </div>
@@ -318,10 +205,10 @@ footer strong { color:rgba(255,255,255,0.88); }
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <p class="hero-eyebrow" contenteditable="true" data-key="hero-eyebrow">CMF AME · Logitech · 3 Years · 20+ Years Experience</p>
-  <h1 class="hero-title" contenteditable="true" data-key="hero-title"><span class="accent">Bill Tsai</span><br>Material Bridge</h1>
-  <p class="hero-subtitle" contenteditable="true" data-key="hero-subtitle">CMF Material Engineer bridging cutting-edge material innovation with mass-producible product reality — translating the impossible into the manufacturable.</p>
-  <span class="hero-tagline" contenteditable="true" data-key="hero-tagline">Start from Prototype · CMF Techno Bricks · Cross-Functional Innovation</span>
+  <p class="hero-eyebrow">CMF AME · Logitech · 3 Years · 20+ Years Experience</p>
+  <h1 class="hero-title"><span class="accent">Bill Tsai</span><br>Material Bridge</h1>
+  <p class="hero-subtitle">CMF Material Engineer bridging cutting-edge material innovation with mass-producible product reality — translating the impossible into the manufacturable.</p>
+  <span class="hero-tagline">Start from Prototype · CMF ideation · Cross-Functional Innovation</span>
   <div class="hero-carousel-wrap">
     <div class="mc-wrap hero-carousel" id="mc-hero"></div>
   </div>
@@ -331,33 +218,33 @@ footer strong { color:rgba(255,255,255,0.88); }
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
-    <p class="section-eyebrow reveal" contenteditable="true" data-key="a-eyebrow">Part 01 — About Me</p>
-    <h2 class="section-title reveal" contenteditable="true" data-key="a-title">Background &amp; Core Strengths</h2>
-    <p class="section-lead reveal" contenteditable="true" data-key="a-lead">3 years at Logitech, backed by 20+ years in design — from mobile phone innovation to becoming the company's internal Material Bridge between creative vision and manufacturing reality.</p>
+    <p class="section-eyebrow reveal">Part 01 — About Me</p>
+    <h2 class="section-title reveal">Background &amp; Core Strengths</h2>
+    <p class="section-lead reveal">3 years at Logitech, backed by 20+ years in design — from mobile phone innovation to becoming the company's internal Material Bridge between creative vision and manufacturing reality.</p>
     <div class="about-grid">
       <div class="about-card reveal">
         <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-        <h3 contenteditable="true" data-key="a1-h">Background &amp; Experience</h3>
-        <p contenteditable="true" data-key="a1-p">I have been with Logitech for 3 years, bringing over 20 years of experience in design teams. My career journey spans from mobile phone innovation to my current role as a "Material Bridge" — connecting material science and mass-production execution.</p>
+        <h3>Background &amp; Experience</h3>
+        <p>I have been with Logitech for 3 years, bringing over 20 years of experience in design teams. My career journey spans from mobile phone innovation to my current role as a "Material Bridge" — connecting material science and mass-production execution.</p>
       </div>
       <div class="about-card reveal">
         <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-        <h3 contenteditable="true" data-key="a2-h">Translating Innovation into Reality</h3>
-        <p contenteditable="true" data-key="a2-p">I specialize in taking cutting-edge new materials and advanced manufacturing processes and translating them into viable, mass-producible product features — bridging what's conceptually exciting with what's manufacturable at scale.</p>
+        <h3>Translating Innovation into Reality</h3>
+        <p>I specialize in taking cutting-edge new materials and advanced manufacturing processes and translating them into viable, mass-producible product features — bridging what's conceptually exciting with what's manufacturable at scale.</p>
       </div>
       <div class="about-card reveal">
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><path d="M17 13v8M13 17h8"/></svg></div>
-        <h3 contenteditable="true" data-key="a3-h">Driving Innovation via Prototypes</h3>
-        <p contenteditable="true" data-key="a3-p">I build physical prototypes to capture internal stakeholders' attention, pitch new ideas across departments, and prove feasibility early in development — making tangible what others can only imagine.</p>
+        <h3>Driving Innovation via Prototypes</h3>
+        <p>I build physical prototypes to capture internal stakeholders' attention, pitch new ideas across departments, and prove feasibility early in development — making tangible what others can only imagine.</p>
       </div>
       <div class="about-card reveal">
         <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="9" y1="11" x2="15" y2="7"/><line x1="9" y1="13" x2="15" y2="17"/></svg></div>
-        <h3 contenteditable="true" data-key="a4-h">Cross-Functional Bridge</h3>
-        <p contenteditable="true" data-key="a4-p">I effectively integrate the diverse needs of Industrial Design (ID), Mechanical Engineering (ME), Global Product Management (GPM), and Global Green Engineering (GGE) — ensuring innovation is robustly manufactured without compromising design intent.</p>
+        <h3>Cross-Functional Bridge</h3>
+        <p>I effectively integrate the diverse needs of Industrial Design (ID), Mechanical Engineering (ME), Global Product Management (GPM), and Global Green Engineering (GGE) — ensuring innovation is robustly manufactured without compromising design intent.</p>
       </div>
       <div class="about-card full core-value-card reveal">
-        <div class="quote" contenteditable="true" data-key="a5-q">"Start from Prototype, Making the Impossible Seem Simple."</div>
-        <p contenteditable="true" data-key="a5-p">The starting point of all innovation lies in physical prototyping. By building rapid prototypes early in development, we accurately validate new material characteristics and cosmetic effects — solving complex manufacturing challenges early to maintain design integrity, driving cross-functional communication, and consistently delivering delightful CMF "Techno Bricks" annually.</p>
+        <div class="quote">"Start from Prototype, Making the Impossible Seem Simple."</div>
+        <p>The starting point of all innovation lies in physical prototyping. By building rapid prototypes early in development, we accurately validate new material characteristics and cosmetic effects — solving complex manufacturing challenges early to maintain design integrity, driving cross-functional communication, and consistently delivering delightful CMF ideation annually.</p>
       </div>
     </div>
   </div>
@@ -367,30 +254,25 @@ footer strong { color:rgba(255,255,255,0.88); }
 <!-- CASES -->
 <section id="cases">
   <div class="container">
-    <p class="section-eyebrow reveal" contenteditable="true" data-key="c-eyebrow">Part 02 — Successful Cases</p>
-    <h2 class="section-title reveal" contenteditable="true" data-key="c-title">Innovation in Action</h2>
-    <p class="section-lead reveal" contenteditable="true" data-key="c-lead">Four projects representing the real-world impact of bridging material science, advanced manufacturing, and cross-functional collaboration.</p>
+    <p class="section-eyebrow reveal">Part 02 — Successful Cases</p>
+    <h2 class="section-title reveal">Innovation in Action</h2>
+    <p class="section-lead reveal">Five projects representing the real-world impact of bridging material science, advanced manufacturing, and cross-functional collaboration.</p>
 
     <div class="cases-list" id="cases-list">
 
       <!-- Project 01 -->
       <div class="case-block reveal">
         <div class="case-text-block">
-          <p class="case-number" contenteditable="true" data-key="c1-num">Project 01</p>
-          <h3 class="case-title" contenteditable="true" data-key="c1-title">PC/PMMA Combo for Product Tiering</h3>
-          <p class="case-highlight" contenteditable="true" data-key="c1-hl">Utilized PC/PMMA composite materials to help the company create significant product differentiation between higher and lower-tier product lines — achieving premium 3D glass-like depth and metallic feeling without actual metal or NCVM processes.</p>
+          <p class="case-number">Project 01</p>
+          <h3 class="case-title">PC/PMMA Combo for Product Tiering</h3>
+          <p class="case-highlight">Utilized PC/PMMA composite materials to help the company create significant product differentiation between higher and lower-tier product lines — achieving premium 3D glass-like depth and metallic feeling without actual metal or NCVM processes.</p>
           <div class="impact-box">
-            <p class="impact-label" contenteditable="true" data-key="c1-lbl">Impact</p>
-            <p contenteditable="true" data-key="c1-imp">Supports "Dead Front Light Effect". Built with 65% recycled materials — a significant sustainability milestone while delivering a distinctly premium aesthetic at scale.</p>
+            <p class="impact-label">Impact</p>
+            <p>Supports "Dead Front Light Effect". Built with 65% recycled materials — a significant sustainability milestone while delivering a distinctly premium aesthetic at scale.</p>
           </div>
         </div>
         <div class="case-carousel-block">
           <div class="mc-wrap case-carousel" id="mc-c1"></div>
-          <div class="case-height-grip" id="case-grip">
-            <div class="grip-bar"></div>
-            <span>Drag to resize all project images</span>
-            <div class="grip-bar"></div>
-          </div>
         </div>
       </div>
       <div class="case-divider reveal"></div>
@@ -398,12 +280,12 @@ footer strong { color:rgba(255,255,255,0.88); }
       <!-- Project 02 -->
       <div class="case-block reverse reveal">
         <div class="case-text-block">
-          <p class="case-number" contenteditable="true" data-key="c2-num">Project 02</p>
-          <h3 class="case-title" contenteditable="true" data-key="c2-title">Advanced Keycap Development</h3>
-          <p class="case-highlight" contenteditable="true" data-key="c2-hl">Drawing on past experience with mobile phone frames, introduced Forging and Nano Molding Technology (NMT) to develop advanced keycaps — using a transparent plastic insert to successfully balance diverse departmental needs.</p>
+          <p class="case-number">Project 02</p>
+          <h3 class="case-title">Advanced Keycap Development</h3>
+          <p class="case-highlight">Drawing on past experience with mobile phone frames, introduced Forging and Nano Molding Technology (NMT) to develop advanced keycaps — using a transparent plastic insert to successfully balance diverse departmental needs.</p>
           <div class="impact-box">
-            <p class="impact-label" contenteditable="true" data-key="c2-lbl">Impact</p>
-            <p contenteditable="true" data-key="c2-imp">Enabled innovative backlit designs while maintaining metallic reflection. Coordinated multiple metal and plastic injection suppliers across GPM's low cost, ID's metallic feel, ME's plastic structure, and CMF's translucent letters — simultaneously.</p>
+            <p class="impact-label">Impact</p>
+            <p>Enabled innovative backlit designs while maintaining metallic reflection. Coordinated multiple metal and plastic injection suppliers across GPM's low cost, ID's metallic feel, ME's plastic structure, and CMF's translucent letters — simultaneously.</p>
           </div>
         </div>
         <div class="case-carousel-block">
@@ -415,12 +297,12 @@ footer strong { color:rgba(255,255,255,0.88); }
       <!-- Project 03 -->
       <div class="case-block reveal">
         <div class="case-text-block">
-          <p class="case-number" contenteditable="true" data-key="c3-num">Project 03</p>
-          <h3 class="case-title" contenteditable="true" data-key="c3-title">"Infinity Effect" Innovation &amp; Internal Adoption</h3>
-          <p class="case-highlight" contenteditable="true" data-key="c3-hl">Led the "Infinity Effect" innovation project, utilizing transparent materials like PMMA combined with Inner Laser technology (green laser) to create multi-layered, floating logos and an infinite depth mirror effect.</p>
+          <p class="case-number">Project 03</p>
+          <h3 class="case-title">"Infinity Effect" Innovation &amp; Internal Adoption</h3>
+          <p class="case-highlight">Led the "Infinity Effect" innovation project, utilizing transparent materials like PMMA combined with Inner Laser technology (green laser) to create multi-layered, floating logos and an infinite depth mirror effect.</p>
           <div class="impact-box">
-            <p class="impact-label" contenteditable="true" data-key="c3-lbl">Impact</p>
-            <p contenteditable="true" data-key="c3-imp">After demonstrating prototypes on the Asuka PMMA keyboard palmrest and gaming headsets, sparked a major discussion at the 2026 CMF Summit — officially prompting the internal team to begin deeper research and incorporate Inner Laser technology into the FY29 product roadmap.</p>
+            <p class="impact-label">Impact</p>
+            <p>After demonstrating prototypes on the Asuka PMMA keyboard palmrest and gaming headsets, sparked a major discussion at the 2026 CMF Summit — officially prompting the internal team to begin deeper research and incorporate Inner Laser technology into the FY29 product roadmap.</p>
           </div>
         </div>
         <div class="case-carousel-block">
@@ -432,52 +314,37 @@ footer strong { color:rgba(255,255,255,0.88); }
       <!-- Project 04 -->
       <div class="case-block reverse reveal">
         <div class="case-text-block">
-          <p class="case-number" contenteditable="true" data-key="c4-num">Project 04</p>
-          <h3 class="case-title" contenteditable="true" data-key="c4-title">Plastic-Free Initiative &amp; Rattan Innovation</h3>
-          <p class="case-highlight" contenteditable="true" data-key="c4-hl">To drive long-term "Structural Sustainability", searched for the next plastic-free step beyond recycled PC — turning to an almost forgotten natural raw material: Rattan. Led early rapid prototyping to significantly shorten validation time.</p>
+          <p class="case-number">Project 04</p>
+          <h3 class="case-title">Plastic-Free Initiative &amp; Rattan Innovation</h3>
+          <p class="case-highlight">To drive long-term "Structural Sustainability", searched for the next plastic-free step beyond recycled PC — turning to an almost forgotten natural raw material: Rattan. Led early rapid prototyping to significantly shorten validation time.</p>
           <div class="impact-box">
-            <p class="impact-label" contenteditable="true" data-key="c4-lbl">Impact</p>
-            <p contenteditable="true" data-key="c4-imp">Successfully combined rattan's natural aesthetics with advanced manufacturing. Developed 3D thermoforming (&gt;10mm depth), IMD, and GF bonding at 0.5/0.8mm thickness. Successfully prototyped on MX series mouse and keyboard concepts — demonstrating that traditional natural materials can achieve cutting-edge mass-production standards.</p>
+            <p class="impact-label">Impact</p>
+            <p>Successfully combined rattan's natural aesthetics with advanced manufacturing. Developed 3D thermoforming (&gt;10mm depth), IMD, and GF bonding at 0.5/0.8mm thickness. Successfully prototyped on MX series mouse and keyboard concepts — demonstrating that traditional natural materials can achieve cutting-edge mass-production standards.</p>
           </div>
         </div>
         <div class="case-carousel-block">
           <div class="mc-wrap case-carousel" id="mc-c4"></div>
         </div>
       </div>
+      <div class="case-divider reveal"></div>
 
-    </div><!-- /.cases-list -->
-
-    <!-- ADD NEW PROJECT -->
-    <div class="add-project-wrap">
-      <button class="add-project-btn" id="add-proj-btn" onclick="showAddForm()">
-        <span class="plus">+</span>
-        <span>新增 Project</span>
-      </button>
-      <div class="add-form" id="add-form">
-        <div>
-          <div class="form-group">
-            <label>Project 標題</label>
-            <input type="text" id="nf-title" placeholder="e.g. Advanced Surface Finish">
-          </div>
-          <div class="form-group">
-            <label>Highlight</label>
-            <textarea id="nf-highlight" placeholder="專案亮點描述..."></textarea>
-          </div>
-          <div class="form-group">
-            <label>Impact</label>
-            <textarea id="nf-impact" placeholder="專案影響與成果..."></textarea>
-          </div>
-          <div class="form-actions">
-            <button class="btn-primary" onclick="submitNewProject()">新增到頁面</button>
-            <button class="btn-cancel" onclick="hideAddForm()">取消</button>
+      <!-- Project 05 -->
+      <div class="case-block reveal">
+        <div class="case-text-block">
+          <p class="case-number">Project 05</p>
+          <h3 class="case-title">Illuminated Keycap — Triple-Shot Light Guide</h3>
+          <p class="case-highlight">Developed a triple-shot molded keycap with an internal light-guide "G" emblem — a transparent light-guide core, an opaque light-blocking body, and a crystal-clear outer shell combined in one three-shot injection process, producing a true 3D floating logo with zero light leak.</p>
+          <div class="impact-box">
+            <p class="impact-label">Impact</p>
+            <p>Demoed on the ASUK keyboard with full per-key RGB synced to the edge light bar — generating strong internal interest in true 3D illuminated legends beyond standard printed or double-shot keycaps, and opening discussion for adoption on future gaming keyboard lines.</p>
           </div>
         </div>
-        <div>
-          <div class="form-group"><label>圖片（選填，可在新增後繼續上傳）</label></div>
-          <div class="mc-wrap case-carousel" id="mc-new" style="pointer-events:auto;"></div>
+        <div class="case-carousel-block">
+          <div class="mc-wrap case-carousel" id="mc-c5"></div>
         </div>
       </div>
-    </div>
+
+    </div><!-- /.cases-list -->
 
   </div>
 </section>
@@ -485,7 +352,7 @@ footer strong { color:rgba(255,255,255,0.88); }
 
 <!-- FOOTER -->
 <footer>
-  <p contenteditable="true" data-key="footer-txt"><strong>Bill Tsai</strong> &nbsp;·&nbsp; CMF AME &nbsp;·&nbsp; Logitech &nbsp;·&nbsp; 2026</p>
+  <p><strong>Bill Tsai</strong> &nbsp;·&nbsp; CMF AME &nbsp;·&nbsp; Logitech &nbsp;·&nbsp; 2026</p>
 </footer>
 
 <script>
@@ -498,126 +365,21 @@ const revealObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 /* ════════════════════════════════════
-   EDIT HINT
+   MINI CAROUSEL CLASS (static images, fixed size)
 ════════════════════════════════════ */
-const hint = document.getElementById('edit-hint');
-if (!localStorage.getItem('mb_hint_seen')) {
-  setTimeout(() => hint.classList.add('show'), 1500);
-  setTimeout(() => { hint.classList.remove('show'); localStorage.setItem('mb_hint_seen','1'); }, 5500);
-}
-
-/* ════════════════════════════════════
-   CONTENTEDITABLE SAVE / RESTORE
-════════════════════════════════════ */
-const TEXT_KEY = 'mb_text_v2';
-function loadTexts() { try { return JSON.parse(localStorage.getItem(TEXT_KEY)||'{}'); } catch { return {}; } }
-function saveText(key, val) {
-  const s = loadTexts(); s[key] = val;
-  try { localStorage.setItem(TEXT_KEY, JSON.stringify(s)); } catch {}
-}
-const savedTexts = loadTexts();
-document.querySelectorAll('[contenteditable][data-key]').forEach(el => {
-  const k = el.dataset.key;
-  if (savedTexts[k] !== undefined) el.innerHTML = savedTexts[k];
-  let t;
-  el.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(() => {
-      saveText(k, el.innerHTML);
-      el.classList.add('saved-flash');
-      setTimeout(() => el.classList.remove('saved-flash'), 600);
-    }, 600);
-  });
-  el.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      const tag = el.tagName;
-      if (tag === 'P' || tag === 'SPAN') { e.preventDefault(); }
-    }
-  });
-});
-
-/* ════════════════════════════════════
-   IMAGE STORAGE
-════════════════════════════════════ */
-const IMG_PFX = 'mb_img_v2_';
-function saveImgs(key, arr) { try { localStorage.setItem(IMG_PFX+key, JSON.stringify(arr)); } catch(e) {} }
-function loadImgs(key) { try { return JSON.parse(localStorage.getItem(IMG_PFX+key)||'null'); } catch { return null; } }
-
-/* ════════════════════════════════════
-   SHARED CASE HEIGHT
-════════════════════════════════════ */
-function setCaseH(h) {
-  document.documentElement.style.setProperty('--case-img-h', h+'px');
-  try { localStorage.setItem('mb_case_h2', h); } catch {}
-}
-const _sh = parseInt(localStorage.getItem('mb_case_h2'));
-if (_sh > 100) setCaseH(_sh);
-const grip = document.getElementById('case-grip');
-if (grip) {
-  let sy, sh;
-  grip.addEventListener('mousedown', e => {
-    e.preventDefault(); sy = e.clientY;
-    sh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--case-img-h'))||380;
-    document.body.style.userSelect = 'none'; document.body.style.cursor = 'ns-resize';
-    const mv = e => setCaseH(Math.max(120, Math.min(window.innerHeight*0.88, sh+(e.clientY-sy))));
-    const up = () => { document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); document.body.style.userSelect=''; document.body.style.cursor=''; };
-    document.addEventListener('mousemove', mv); document.addEventListener('mouseup', up);
-  });
-}
-
-/* ════════════════════════════════════
-   MINI CAROUSEL CLASS
-════════════════════════════════════ */
-const UP_ICON = `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
-const MAX_SLIDES = 200;
-
 class MiniCarousel {
-  constructor(wrapEl, label, storeKey) {
-    this.wrap = wrapEl; this.label = label; this.storeKey = storeKey;
-    this.cur = 0; this.slides = []; this._timer = null;
-    this.fileInput = document.createElement('input');
-    this.fileInput.type = 'file'; this.fileInput.accept = 'image/*';
-    this.fileInput.style.display = 'none'; this.pendingIdx = null;
-    document.body.appendChild(this.fileInput);
-    this.fileInput.addEventListener('change', () => this._onFile());
-    this._build(); this._loadFromStorage();
+  constructor(wrapEl, imgs) {
+    this.wrap = wrapEl; this.imgs = imgs; this.cur = 0; this._timer = null;
+    this._build();
   }
-  _initHeightResize() {
-    let sy, sh;
-    const mv = e => {
-      const dy = (e.touches?e.touches[0].clientY:e.clientY)-sy;
-      this.viewport.style.height = Math.max(160, Math.min(window.innerHeight*0.9, sh+dy))+'px';
-    };
-    const up = () => {
-      document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up);
-      document.removeEventListener('touchmove',mv); document.removeEventListener('touchend',up);
-      document.body.style.userSelect=''; document.body.style.cursor='';
-    };
-    this._resizeH.addEventListener('mousedown', e => {
-      e.preventDefault(); e.stopPropagation();
-      sy=e.clientY; sh=this.viewport.offsetHeight;
-      document.body.style.userSelect='none'; document.body.style.cursor='se-resize';
-      document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);
-    });
-  }
-  _initWidthResize() {
-    let sx, sw;
-    const mv = e => {
-      this.wrap.style.width = Math.max(300, Math.min(window.innerWidth*0.98, sw+(e.clientX-sx)))+'px';
-    };
-    const up = () => { document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); document.body.style.userSelect=''; document.body.style.cursor=''; };
-    this._resizeW.addEventListener('mousedown', e => {
-      e.preventDefault(); sx=e.clientX; sw=this.wrap.offsetWidth;
-      document.body.style.userSelect='none'; document.body.style.cursor='ew-resize';
-      document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);
-    });
-  }
-  _startAuto() { this._stopAuto(); if (this.slides.length<2) return; this._timer = setInterval(()=>this._goto((this.cur+1)%this.slides.length),5000); }
-  _stopAuto()  { if (this._timer) { clearInterval(this._timer); this._timer=null; } }
-  _resetAuto() { this._stopAuto(); this._startAuto(); }
   _build() {
     this.viewport = document.createElement('div'); this.viewport.className='mc-viewport';
     this.track = document.createElement('div'); this.track.className='mc-track';
+    this.imgs.forEach((src, i) => {
+      const slide = document.createElement('div'); slide.className='mc-slide';
+      const img = document.createElement('img'); img.className='mc-img'; img.src=src; img.alt='image '+(i+1);
+      slide.appendChild(img); this.track.appendChild(slide);
+    });
     this.viewport.appendChild(this.track);
     this.viewport.addEventListener('mouseenter', ()=>this._stopAuto());
     this.viewport.addEventListener('mouseleave', ()=>this._startAuto());
@@ -627,26 +389,18 @@ class MiniCarousel {
     this.counterEl = document.createElement('span'); this.counterEl.className='mc-counter';
     this.viewport.appendChild(this.counterEl);
     this.wrap.appendChild(this.viewport);
-    this._resizeH = document.createElement('div');
-    this._resizeH.className='mc-resize-handle'; this._resizeH.title='拖曳調整高度';
-    this._resizeH.innerHTML=`<svg viewBox="0 0 14 14"><line x1="2" y1="12" x2="12" y2="2"/><line x1="7" y1="12" x2="12" y2="7"/></svg>`;
-    this.viewport.appendChild(this._resizeH); this._initHeightResize();
-    if (this.wrap.classList.contains('hero-carousel')) {
-      this._resizeW = document.createElement('div'); this._resizeW.className='mc-resize-w';
-      this._resizeW.title='拖曳調整寬度'; this.wrap.style.position='relative';
-      this.wrap.appendChild(this._resizeW); this._initWidthResize();
-    }
     this.footer = document.createElement('div'); this.footer.className='mc-footer';
     this.dotsEl = document.createElement('div'); this.dotsEl.className='mc-dots';
-    this.addBtn = document.createElement('button'); this.addBtn.className='mc-add';
-    this.addBtn.innerHTML=`<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add photo`;
-    this.addBtn.addEventListener('click', ()=>this._addSlide());
-    this.footer.appendChild(this.dotsEl); this.footer.appendChild(this.addBtn);
+    this.imgs.forEach((_, i) => {
+      const dot = document.createElement('div'); dot.className='mc-dot';
+      dot.addEventListener('click', ()=>this._goto(i)); this.dotsEl.appendChild(dot);
+    });
+    this.footer.appendChild(this.dotsEl);
     this.wrap.appendChild(this.footer);
     let sx=0;
     this.viewport.addEventListener('touchstart', e=>{sx=e.changedTouches[0].clientX;},{passive:true});
-    this.viewport.addEventListener('touchend',   e=>{const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>36)this._move(dx<0?1:-1);});
-    this._addSlide(true);
+    this.viewport.addEventListener('touchend', e=>{const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>36)this._move(dx<0?1:-1);});
+    this._update(); this._startAuto();
   }
   _arrow(cls, pts) {
     const btn = document.createElement('button');
@@ -655,176 +409,89 @@ class MiniCarousel {
     btn.addEventListener('click', ()=>this._move(cls==='prev'?-1:1));
     return btn;
   }
-  _addSlide(first=false, preloadSrc=null) {
-    if (this.slides.length>=MAX_SLIDES) return;
-    const idx = this.slides.length;
-    const slide = document.createElement('div'); slide.className='mc-slide';
-    const slot  = document.createElement('div'); slot.className='up-slot';
-    slot.innerHTML=`<div class="up-icon">${UP_ICON}</div><span class="up-lbl">${first?'Click to add '+this.label:'Add photo'}</span><span class="up-hint">JPG · PNG · WEBP</span>`;
-    slot.addEventListener('click', ()=>{ this.pendingIdx=idx; this.fileInput.click(); });
-    const img = document.createElement('img'); img.className='mc-img'; img.alt=this.label+' '+(idx+1);
-    slot.appendChild(img);
-    const rm = document.createElement('button'); rm.className='mc-rm'; rm.textContent='✕';
-    rm.addEventListener('click', e=>{ e.stopPropagation(); this._removeImg(idx); });
-    slot.appendChild(rm); slide.appendChild(slot); this.track.appendChild(slide);
-    const dot = document.createElement('div'); dot.className='mc-dot';
-    dot.addEventListener('click', ()=>this._goto(idx)); this.dotsEl.appendChild(dot);
-    this.slides.push({slotEl:slot, imgEl:img, dotEl:dot});
-    if (preloadSrc) { img.src=preloadSrc; slot.classList.add('filled'); }
-    if (!first) { this._goto(idx); this._startAuto(); } else this._update();
-  }
-  _onFile() {
-    const file=this.fileInput.files[0]; if(!file||this.pendingIdx===null) return;
-    const idx=this.pendingIdx;
-    const reader=new FileReader();
-    reader.onload=e=>{ const{slotEl,imgEl}=this.slides[idx]; imgEl.src=e.target.result; slotEl.classList.add('filled'); this._update(); this._startAuto(); this._saveToStorage(); };
-    reader.readAsDataURL(file); this.fileInput.value=''; this.pendingIdx=null;
-  }
-  _removeImg(idx) { const{slotEl,imgEl}=this.slides[idx]; imgEl.src=''; slotEl.classList.remove('filled'); this._saveToStorage(); }
-  _move(dir) { this._resetAuto(); this._goto(this.cur+dir); }
-  _goto(idx) { this.cur=Math.max(0,Math.min(idx,this.slides.length-1)); this._update(); }
+  _startAuto() { this._stopAuto(); if(this.imgs.length<2) return; this._timer=setInterval(()=>this._goto((this.cur+1)%this.imgs.length),5000); }
+  _stopAuto()  { if(this._timer){clearInterval(this._timer);this._timer=null;} }
+  _move(dir)   { this._stopAuto(); this._goto(this.cur+dir); this._startAuto(); }
+  _goto(idx)   { this.cur=Math.max(0,Math.min(idx,this.imgs.length-1)); this._update(); }
   _update() {
-    const n=this.slides.length;
+    const n=this.imgs.length;
     this.track.style.transform=`translateX(-${this.cur*100}%)`;
     this.counterEl.textContent=n>1?`${this.cur+1} / ${n}`:'';
-    this.slides.forEach(({dotEl},i)=>dotEl.classList.toggle('active',i===this.cur));
+    this.dotsEl.querySelectorAll('.mc-dot').forEach((d,i)=>d.classList.toggle('active',i===this.cur));
     this.prevBtn.toggleAttribute('disabled',this.cur===0);
     this.nextBtn.toggleAttribute('disabled',this.cur===n-1);
     this.prevBtn.style.display=n>1?'':'none';
     this.nextBtn.style.display=n>1?'':'none';
-    this.dotsEl.style.display =n>1?'':'none';
-    this.addBtn.style.display =n>=MAX_SLIDES?'none':'';
-  }
-  _saveToStorage() { saveImgs(this.storeKey, this.slides.map(s=>s.imgEl.src||null)); }
-  _loadFromStorage() {
-    const saved=loadImgs(this.storeKey); if(!saved||!saved.length) return;
-    saved.forEach((src,idx)=>{
-      if(!src) return;
-      if(idx===0){const{slotEl,imgEl}=this.slides[0];imgEl.src=src;slotEl.classList.add('filled');}
-      else this._addSlide(false,src);
-    });
-    this._update(); this._startAuto();
+    this.dotsEl.style.display=n>1?'':'none';
   }
 }
 
 /* ════════════════════════════════════
    STATIC IMAGE CONFIG
-   把圖片上傳到 GitHub repo 的 images/ 資料夾後，
+   把圖片放進 GitHub repo 的 images/ 資料夾後，
    在這裡填入檔名即可顯示在網頁上。
    格式：'images/你的檔名.jpg'
 ════════════════════════════════════ */
 const STATIC_IMGS = {
   hero: [
-    // 'images/hero1.jpg',
-    // 'images/hero2.jpg',
+    'images/hero1.jpg',
+    'images/hero2.jpg',
+    'images/hero3.jpg',
+    'images/hero4.jpg',
+    'images/hero5.jpg',
+    'images/hero6.jpg',
+    'images/hero7.jpg',
+    'images/hero8.jpg',
+    'images/hero9.jpg',
+    'images/hero10.jpg',
+    'images/hero11.jpg',
   ],
   c1: [
-    // 'images/proj1-a.jpg',
-    // 'images/proj1-b.jpg',
+    'images/project1a.jpg',
+    'images/project1b.jpg',
+    'images/project1c.jpg',
+    'images/project1d.jpg',
+    'images/project1e.jpg',
   ],
   c2: [
-    // 'images/proj2-a.jpg',
+    'images/project2a.jpg',
+    'images/project2b.jpg',
+    'images/project2c.jpg',
+    'images/project2d.jpg',
+    'images/project2e.jpg',
   ],
   c3: [
-    // 'images/proj3-a.jpg',
+    'images/project3a.jpg',
+    'images/project3b.jpg',
+    'images/project3c.jpg',
+    'images/project3d.jpg',
+    'images/project3e.jpg',
   ],
   c4: [
-    // 'images/proj4-a.jpg',
+    'images/project4a.jpg',
+    'images/project4b.jpg',
+    'images/project4c.jpg',
+    'images/project4d.jpg',
+    'images/project4e.jpg',
+  ],
+  c5: [
+    'images/project5a.jpg',
+    'images/project5b.jpg',
+    'images/project5c.jpg',
+    'images/project5d.jpg',
+    'images/project5e.jpg',
   ],
 };
 
 /* ════════════════════════════════════
    INIT CAROUSELS
 ════════════════════════════════════ */
-const carousels = {
-  hero: new MiniCarousel(document.getElementById('mc-hero'), 'hero image', 'hero'),
-  c1:   new MiniCarousel(document.getElementById('mc-c1'),   'Project 01', 'c1'),
-  c2:   new MiniCarousel(document.getElementById('mc-c2'),   'Project 02', 'c2'),
-  c3:   new MiniCarousel(document.getElementById('mc-c3'),   'Project 03', 'c3'),
-  c4:   new MiniCarousel(document.getElementById('mc-c4'),   'Project 04', 'c4'),
-};
-
-// 載入靜態圖片（只在 localStorage 無資料時套用）
-Object.entries(STATIC_IMGS).forEach(([key, urls]) => {
-  if (!urls.length) return;
-  const saved = loadImgs(key);
-  if (saved && saved.some(Boolean)) return; // 已有本地資料，跳過
-  const mc = carousels[key];
-  urls.forEach((src, i) => {
-    if (i === 0) {
-      mc.slides[0].imgEl.src = src;
-      mc.slides[0].slotEl.classList.add('filled');
-    } else {
-      mc._addSlide(false, src);
-    }
-  });
-  mc._update(); mc._startAuto();
-});
-let newCarousel = null;
-
-/* ════════════════════════════════════
-   ADD NEW PROJECT
-════════════════════════════════════ */
-let projCount = 4;
-
-function showAddForm() {
-  document.getElementById('add-proj-btn').style.display='none';
-  document.getElementById('add-form').classList.add('show');
-  if (!newCarousel) {
-    newCarousel = new MiniCarousel(document.getElementById('mc-new'), 'Project image', '__new__');
-  }
-}
-function hideAddForm() {
-  document.getElementById('add-form').classList.remove('show');
-  document.getElementById('add-proj-btn').style.display='';
-}
-function submitNewProject() {
-  const title     = document.getElementById('nf-title').value.trim();
-  const highlight = document.getElementById('nf-highlight').value.trim();
-  const impact    = document.getElementById('nf-impact').value.trim();
-  if (!title) { alert('請填寫 Project 標題'); return; }
-  projCount++;
-  const num = String(projCount).padStart(2,'0');
-  const key = 'c'+projCount;
-  // Divider
-  const div = document.createElement('div'); div.className='case-divider'; document.getElementById('cases-list').appendChild(div);
-  // Card
-  const block = document.createElement('div'); block.className='case-block reveal';
-  block.innerHTML = `
-    <div class="case-text-block">
-      <p class="case-number" contenteditable="true" data-key="${key}-num">Project ${num}</p>
-      <h3 class="case-title" contenteditable="true" data-key="${key}-title">${title}</h3>
-      ${highlight?`<p class="case-highlight" contenteditable="true" data-key="${key}-hl">${highlight}</p>`:''}
-      ${impact?`<div class="impact-box"><p class="impact-label">Impact</p><p contenteditable="true" data-key="${key}-imp">${impact}</p></div>`:''}
-    </div>
-    <div class="case-carousel-block">
-      <div class="mc-wrap case-carousel" id="mc-${key}"></div>
-    </div>`;
-  document.getElementById('cases-list').appendChild(block);
-  // Attach contenteditable saving
-  block.querySelectorAll('[contenteditable][data-key]').forEach(el=>{
-    let t; el.addEventListener('input',()=>{ clearTimeout(t); t=setTimeout(()=>{ saveText(el.dataset.key,el.innerHTML); el.classList.add('saved-flash'); setTimeout(()=>el.classList.remove('saved-flash'),600); },600); });
-  });
-  // Move images from new carousel
-  const imgSrcs = (newCarousel?.slides||[]).map(s=>s.imgEl.src).filter(Boolean);
-  carousels[key] = new MiniCarousel(document.getElementById('mc-'+key), 'Project '+num, key);
-  if (imgSrcs.length) {
-    imgSrcs.forEach((src,i)=>{
-      if(i===0){const{slotEl,imgEl}=carousels[key].slides[0];imgEl.src=src;slotEl.classList.add('filled');}
-      else carousels[key]._addSlide(false,src);
-    });
-    carousels[key]._update(); carousels[key]._startAuto(); carousels[key]._saveToStorage();
-  }
-  revealObs.observe(block);
-  block.scrollIntoView({behavior:'smooth',block:'center'});
-  // Reset form
-  document.getElementById('nf-title').value='';
-  document.getElementById('nf-highlight').value='';
-  document.getElementById('nf-impact').value='';
-  newCarousel = null;
-  document.getElementById('mc-new').innerHTML='';
-  hideAddForm();
-}
+new MiniCarousel(document.getElementById('mc-hero'), STATIC_IMGS.hero);
+new MiniCarousel(document.getElementById('mc-c1'),   STATIC_IMGS.c1);
+new MiniCarousel(document.getElementById('mc-c2'),   STATIC_IMGS.c2);
+new MiniCarousel(document.getElementById('mc-c3'),   STATIC_IMGS.c3);
+new MiniCarousel(document.getElementById('mc-c4'),   STATIC_IMGS.c4);
+new MiniCarousel(document.getElementById('mc-c5'),   STATIC_IMGS.c5);
 </script>
 </body>
 </html>
